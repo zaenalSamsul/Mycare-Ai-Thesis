@@ -8,7 +8,7 @@ curl http://localhost:3000/api/health
 
 ## 2. Test Persona Preview tanpa LLM
 
-Endpoint ini hemat token karena tidak memanggil Groq.
+Endpoint ini hemat token karena tidak memanggil Gemini.
 
 ```bash
 curl -X POST http://localhost:3000/api/persona/preview \
@@ -136,3 +136,4 @@ Body:
   "model": "fer2013"
 }
 ```
+
