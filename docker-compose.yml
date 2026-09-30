@@ -1,0 +1,60 @@
+services:
+  frontend:
+    build:
+      context: ./FRONT-END
+      args:
+        # API diproxy oleh Nginx sehingga browser hanya perlu mengakses satu origin.
+        VITE_MYCARE_CHAT_API_BASE_URL: /
+    ports:
+      - "5173:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+  backend:
+    build: ./BACK-END-ML
+    environment:
+      PORT: 3000
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.1-flash-lite}
+      GEMINI_API_URL: ${GEMINI_API_URL:-https://generativelanguage.googleapis.com/v1beta}
+      GEMINI_TEMPERATURE: ${GEMINI_TEMPERATURE:-0.7}
+      GEMINI_MAX_OUTPUT_TOKENS: ${GEMINI_MAX_OUTPUT_TOKENS:-450}
+      CLASSIFICATION_SERVICE_URL: http://classification-service:8080
+      FER_SERVICE_URL: http://fer-service:5001
+    depends_on:
+      classification-service:
+        condition: service_healthy
+      fer-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    restart: unless-stopped
+
+  classification-service:
+    build: ./BACK-END-ML/classification_service
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 90s
+    restart: unless-stopped
+
+  fer-service:
+    build: ./BACK-END-ML/fer_service
+    environment:
+      PORT: 5001
+      FER_MODEL_KEY: fer2013
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5001/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+    restart: unless-stopped

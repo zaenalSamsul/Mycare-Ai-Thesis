@@ -1,0 +1,10 @@
+flask>=3.0.0
+flask-cors>=4.0.0
+# Model FER sudah berformat .tflite, sehingga tidak memerlukan TensorFlow penuh.
+tflite-runtime==2.14.0
+# Dipakai untuk membuat 16 fitur landmark yang sama seperti pipeline training.
+mediapipe==0.10.33
+opencv-python-headless>=4.8.0
+# tflite-runtime 2.14 dibangun dengan NumPy 1.x.
+numpy>=1.24.0,<2.0.0
+gunicorn>=21.2.0

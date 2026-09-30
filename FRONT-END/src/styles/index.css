@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes scroll-reverse {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.animate-marquee {
+    animation: scroll 30s linear infinite;
+}
+
+.animate-marquee2 {
+    animation: scroll-reverse 25s linear infinite;
+}
+
+.animate-marquee3 {
+    animation: scroll 35s linear infinite;
+}
+
+.animate-marquee:hover,
+.animate-marquee2:hover,
+.animate-marquee3:hover {
+    animation-play-state: paused;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.transition-transform {
+    transition: transform 0.3s ease;
+}

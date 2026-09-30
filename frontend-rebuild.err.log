@@ -1,0 +1,12 @@
+ classification-service  Built
+ fer-service  Built
+ backend  Built
+ frontend  Built
+ Container mycareai_skripsi_curhatfer_groq-classification-service-1  Running
+ Container mycareai_skripsi_curhatfer_groq-fer-service-1  Recreate
+ Container mycareai_skripsi_curhatfer_groq-fer-service-1  Recreated
+ Container mycareai_skripsi_curhatfer_groq-backend-1  Recreate
+ Container mycareai_skripsi_curhatfer_groq-backend-1  Recreated
+ Container mycareai_skripsi_curhatfer_groq-frontend-1  Recreate
+ Container mycareai_skripsi_curhatfer_groq-frontend-1  Error response from daemon: No such container: 019848f767440b93377291ef9cd0ffb830c6be941bc82bf6accdb949853d5ede
+Error response from daemon: No such container: 019848f767440b93377291ef9cd0ffb830c6be941bc82bf6accdb949853d5ede
